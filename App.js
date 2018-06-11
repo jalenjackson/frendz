@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { StackNavigator } from 'react-navigation'
-import LandingUnAuthScreen from './components/landingUnAuthScreen'
-import LoginScreen from './components/loginScreen'
-import SignUpScreen from './components/signUpScreen'
-import HomeScreen from './components/homeScreen'
+import LandingUnAuthScreen from './screens/landingUnAuthScreen'
+import LoginScreen from './screens/loginScreen'
+import SignUpScreen from './screens/signUpScreen'
+import HomeScreen from './screens/homeScreen'
 
 const App = StackNavigator({
   LandingPageUnAuthenticated: { screen: LandingUnAuthScreen },
