@@ -15,17 +15,17 @@ export default class LandingUnAuthScreen extends Component {
   }
 
   componentDidMount(){
-    AsyncStorage.getItem('access-token').then((value)=> {
-      if(value){
-        // yes
-      } else {
-        // no
-      }
-    }) 
+    
   }
 
   render(){
-    const { navigate } = this.props.navigation
+    const { navigate } = this.props.navigation 
+
+    AsyncStorage.getItem('access-token').then((value)=> {
+      if(value){
+        //navigate('Dashboard') 
+      }
+    }) 
   
     return (
         <View style={ styles.mainBackground }>

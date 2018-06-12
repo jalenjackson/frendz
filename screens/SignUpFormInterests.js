@@ -1,37 +1,54 @@
 import React, { Component } from 'react'
 import { View, TextInput, Button, AsyncStorage, Image, StyleSheet, TouchableOpacity, Text } from 'react-native'
 
-export default class SignUpFormOccupationScreen extends Component {
+export default class SignUpFormInterestsScreen extends Component {
  
   constructor(props){
     super(props)
     this.state = { 
-      inputJobTitle: '', 
+      inputInterest: '', 
+      interests: ''
     }
   }
 
   updateUserAttribute(navigate){
     var access_token = ''
     AsyncStorage.getItem('access-token').then((value)=> {
-     access_token = JSON.parse(value)
-    }).then(()=>{
+
       fetch('http://localhost:3000/v1/update_user', {
-        body: `job_title=${ this.state.inputJobTitle }&access_token=${ access_token }`,
+        body: `interest=${ this.state.inputInterest }&access_token=${ JSON.parse(value) }`,
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         method: "POST" 
-      }).then(()=>{
-       navigate('SignUpFormInterests')
-      })  
+      }).then((response)=>{
+        return response.json();
+      }).then((data)=>{
+        this.setState({ interests: data })
+      })
+
     })
   }
 
   setTextInputState(text){
-    this.setState({ inputJobTitle: text })
-  }
+    this.setState({ inputInterest: text })
+  } 
 
   navigateToSignUpPage(navigate){
     navigate('Login')
   }
+
+  pills(){
+    return this.state.interests.map((data, i)=>{
+      return (
+        <View key={ i }>
+          <Text>{ data.interest }</Text>
+        </View>
+      )
+    })
+  }
+
+  finishedAddingPills(navigate){
+    navigate('GenderPreference')
+  } 
 
   render(){
 
@@ -40,19 +57,25 @@ export default class SignUpFormOccupationScreen extends Component {
     return (
       <View style={ styles.mainBackground }>
         <View style={{ flex: 1, flexDirection: 'column', alignItems: 'center' }}>
-          <Image style={ styles.imageHeader } source={{ uri: 'https://userresearch.google.com/images/team_graphic.png' }} />
-          <TextInput style={ styles.textInput } placeholder="What do you do for a living?" onChangeText={ this.setTextInputState.bind(this) } />
+          <Image style={ styles.imageHeader } source={{ uri: 'https://cdn-images-1.medium.com/max/1200/1*oegczK5AHtvznmLvaFk2Xg.png' }} />
+          <TextInput style={ styles.textInput } placeholder="List out your interests" onChangeText={ this.setTextInputState.bind(this) } />
           
           <TouchableOpacity onPress={ this.updateUserAttribute.bind(this, navigate) } >
             <View style={styles.nextButton}>
               <Text style={styles.nextButtonText}>
-                Next
+                Add Interest
               </Text>
             </View>
           </TouchableOpacity>
 
+          { this.state.interests == '' ? null : this.pills() }
+
+          <Button onPress={ this.finishedAddingPills.bind(this, navigate) } color='#69B6F3' title='Next' />
+
+
           <Text style={ styles.noAccount }>Already have an account?</Text>
           <Button onPress={ this.navigateToSignUpPage.bind(this, navigate) } color='#69B6F3' title='Sign In' />
+
 
 
 

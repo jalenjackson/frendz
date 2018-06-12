@@ -1,32 +1,32 @@
 import React, { Component } from 'react'
 import { View, TextInput, Button, AsyncStorage, Image, StyleSheet, TouchableOpacity, Text } from 'react-native'
 
-export default class SignUpFormOccupationScreen extends Component {
+export default class GenderPreferenceScreen extends Component {
  
   constructor(props){
     super(props)
     this.state = { 
-      inputJobTitle: '', 
+      inputGenderPreference: '', 
     }
   }
 
   updateUserAttribute(navigate){
     var access_token = ''
     AsyncStorage.getItem('access-token').then((value)=> {
-     access_token = JSON.parse(value)
-    }).then(()=>{
+
       fetch('http://localhost:3000/v1/update_user', {
-        body: `job_title=${ this.state.inputJobTitle }&access_token=${ access_token }`,
+        body: `name=${ this.state.inputName }&access_token=${ JSON.parse(value) }`,
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         method: "POST" 
       }).then(()=>{
-       navigate('SignUpFormInterests')
-      })  
+        navigate('SignUpFormOccupation')
+      })
+
     })
   }
 
   setTextInputState(text){
-    this.setState({ inputJobTitle: text })
+    this.setState({ inputName: text })
   }
 
   navigateToSignUpPage(navigate){
@@ -40,8 +40,8 @@ export default class SignUpFormOccupationScreen extends Component {
     return (
       <View style={ styles.mainBackground }>
         <View style={{ flex: 1, flexDirection: 'column', alignItems: 'center' }}>
-          <Image style={ styles.imageHeader } source={{ uri: 'https://userresearch.google.com/images/team_graphic.png' }} />
-          <TextInput style={ styles.textInput } placeholder="What do you do for a living?" onChangeText={ this.setTextInputState.bind(this) } />
+          <Image style={ styles.imageHeader } source={{ uri: 'https://cdn-images-1.medium.com/max/1200/1*oegczK5AHtvznmLvaFk2Xg.png' }} />
+          <TextInput style={ styles.textInput } placeholder="What are you here for?" onChangeText={ this.setTextInputState.bind(this) } />
           
           <TouchableOpacity onPress={ this.updateUserAttribute.bind(this, navigate) } >
             <View style={styles.nextButton}>
