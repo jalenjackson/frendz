@@ -11,25 +11,43 @@ export default class TextApp extends Component {
       inputName: '',
       inputWorkField: '',
       inputJobTitle: '',
-      inputWorkPlace: ''
+      inputWorkPlace: '',
+      longitude: 0,
+      latitude: 0
     }
+  }
+
+  componentDidMount(){
+    let access_token = ''
+    AsyncStorage.getItem('access-token').then((value)=>{
+      access_token = JSON.parse(value)
+    })
+    navigator.geolocation.getCurrentPosition((position)=>{
+      fetch('http://localhost:3000/v1/matches', {
+        body: `latitude=${ position.coords.latitude }&longitude=${ position.coords.longitude }&access_token=${ access_token }`,
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        method: "POST" 
+      });
+    });
   }
  
   trySigningUpUser(){
-    fetch('http://localhost:3000/v1/sign_up', {
-      body: `email=${ this.state.inputEmail }&password=${ this.state.inputPassword }&name=${ this.state.inputName }&work_field=${ this.state.inputWorkField }&job_title=${ this.state.inputJobTitle }&work_place=${ this.state.inputWorkPlace }`,
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      method: "POST" 
-    }).then((response)=>{
-      return response.json();
-    }).then((data)=>{
-      AsyncStorage.setItem('access-token', JSON.stringify(data.access_token))
+    navigator.geolocation.getCurrentPosition((position)=>{
+      fetch('http://localhost:3000/v1/sign_up', {
+        body: `email=${ this.state.inputEmail }&password=${ this.state.inputPassword }&name=${ this.state.inputName }&work_field=${ this.state.inputWorkField }&job_title=${ this.state.inputJobTitle }&work_place=${ this.state.inputWorkPlace }&latitude=${ position.coords.latitude }&longitude=${ position.coords.longitude }`,
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        method: "POST" 
+      }).then((response)=>{
+        return response.json();
+      }).then((data)=>{
+        AsyncStorage.setItem('access-token', JSON.stringify(data.access_token))
+      })
+      .then(()=>{
+        AsyncStorage.getItem('access-token').then((value)=> {
+          console.log(JSON.parse(value))
+        })   
+      })
     })
-    .then(()=>{
-      AsyncStorage.getItem('access-token').then((value)=> {
-        console.log(JSON.parse(value))
-      })   
-    }) 
   }
 
   setTextInputState(key, text){

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, Image, TouchableOpacity } from 'react-native'
+import { View, Text, Image, TouchableOpacity, AsyncStorage } from 'react-native'
 import Swiper from 'react-native-swiper'
 var styles = require('../stylesheets/unAuthLandingStyles')
 
@@ -9,9 +9,19 @@ export default class LandingUnAuthScreen extends Component {
     if(navigation == 'Login'){
       navigate(navigation)
     }
-    if(navigation == 'SignUp'){
+    if(navigation == 'SignUpFormEmailAddress'){
       navigate(navigation)
     }
+  }
+
+  componentDidMount(){
+    AsyncStorage.getItem('access-token').then((value)=> {
+      if(value){
+        // yes
+      } else {
+        // no
+      }
+    }) 
   }
 
   render(){
@@ -43,7 +53,7 @@ export default class LandingUnAuthScreen extends Component {
               </View>
             </Swiper>
 
-            <TouchableOpacity onPress={ this.navigate.bind(this, 'SignUp', navigate) }>
+            <TouchableOpacity onPress={ this.navigate.bind(this, 'SignUpFormEmailAddress', navigate) }>
               <View style={styles.signUpButton}>
                 <Text style={styles.signUpButtonText}>
                   Get Started

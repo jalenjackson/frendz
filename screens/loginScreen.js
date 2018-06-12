@@ -42,7 +42,7 @@ export default class LoginScreen extends Component {
   }
 
   navigateToSignUpPage(navigate){
-    navigate('SignUp')
+    navigate('SignUpFormEmailAddress')
   }
 
   render(){
