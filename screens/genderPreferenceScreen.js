@@ -15,18 +15,18 @@ export default class GenderPreferenceScreen extends Component {
     AsyncStorage.getItem('access-token').then((value)=> {
 
       fetch('http://localhost:3000/v1/update_user', {
-        body: `name=${ this.state.inputName }&access_token=${ JSON.parse(value) }`,
+        body: `gender_preference=${ this.state.inputGenderPreference }&access_token=${ JSON.parse(value) }`,
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         method: "POST" 
       }).then(()=>{
-        navigate('SignUpFormOccupation')
+        navigate('ImageUpload')
       })
 
     })
   }
 
   setTextInputState(text){
-    this.setState({ inputName: text })
+    this.setState({ inputGenderPreference: text })
   }
 
   navigateToSignUpPage(navigate){

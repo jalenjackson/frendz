@@ -10,6 +10,9 @@ import SignUpFormOccupationScreen from './screens/signUpFormOccupationScreen'
 import SignUpFormInterestsScreen from './screens/SignUpFormInterests'
 import DashboardScreen from './screens/dashboardScreen'
 import GenderPreferenceScreen from './screens/genderPreferenceScreen'
+import UserEditScreen from './screens/userEditScreen'
+import UserMessagesScreen from './screens/userMessagesScreen'
+import ImageUploadScreen from  './screens/imageUploadScreen'
 import { AsyncStorage } from 'react-native'
 
 
@@ -19,6 +22,9 @@ const App = StackNavigator({
   SignUpFormName: { screen: SignUpFormNameScreen },
   SignUpFormInterests: { screen: SignUpFormInterestsScreen },
   GenderPreference: { screen: GenderPreferenceScreen },
+  ImageUpload: { screen: ImageUploadScreen },
+  UserEdit: { screen: UserEditScreen },
+  UserMessages: { screen: UserMessagesScreen },
   SignUpFormOccupation: { screen: SignUpFormOccupationScreen },
   Dashboard: { screen: DashboardScreen },
   HomeScreen: { screen: HomeScreen },

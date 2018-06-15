@@ -23,7 +23,7 @@ export default class LandingUnAuthScreen extends Component {
 
     AsyncStorage.getItem('access-token').then((value)=> {
       if(value){
-        //navigate('Dashboard') 
+        navigate('Dashboard') 
       }
     }) 
   

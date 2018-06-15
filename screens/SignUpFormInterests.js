@@ -42,7 +42,7 @@ export default class SignUpFormInterestsScreen extends Component {
         <View key={ i }>
           <Text>{ data.interest }</Text>
         </View>
-      )
+      ) 
     })
   }
 
